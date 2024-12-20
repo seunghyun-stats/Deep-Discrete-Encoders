@@ -5,4 +5,4 @@ Models for Rich Data with Discrete Latent Layers"
 
 
 
-The folder `utilities` contains sub-functions that will be required to implement the main algorithms. We recommend adding this folder by the command ` addpath 'utilities'`
+The folder `utilities` contains sub-functions that will be required to implement the main algorithms. We recommend adding this folder using the `addpath 'utilities'` command in MATLAB.
