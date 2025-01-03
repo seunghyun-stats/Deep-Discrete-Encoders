@@ -1,7 +1,6 @@
 # Deep-Discrete-Encoders
 
-This repository contains the MATLAB codes for the manuscript "Deep Discrete Encoders: Identifiable Deep Generative
-Models for Rich Data with Discrete Latent Layers"
+This repository contains the MATLAB codes for the manuscript [Lee, S. and Gu, Y. (2025), Deep Discrete Encoders: Identifiable Deep Generative Models for Rich Data with Discrete Latent Layers](https://arxiv.org/abs/2501.01414)
 
 ### Codes for the proposed method:
 The folder `main algorithms` contains the codes for Algorithms 1-3 (basic PEM, double-SVD initialization, penalized SAEM) proposed in the manuscript. Each sub-folder (Bernoulli, Poisson, Normal) corresponds to each observed-layer parametric family.
