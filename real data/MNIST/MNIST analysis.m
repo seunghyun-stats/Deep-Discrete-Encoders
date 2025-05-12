@@ -1,6 +1,7 @@
 %% load data
 Y = readmatrix("MNIST_x_train.csv");
 lab = readmatrix("MNIST_lab_train.csv");
+pixel_coord = readmatrix("pixel_coord.csv");
 
 [N, J] = size(Y);
 
