@@ -1,5 +1,5 @@
 %% import data
-addpath('C:\Users\leesa\Documents\MATLAB\Deep parametric model\GitHub codes\Utilities')
+addpath('Utilities')
 K1 = 7;
 
 G1 = importdata("Q.csv").data;
