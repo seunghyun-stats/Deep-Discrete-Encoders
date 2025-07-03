@@ -1,5 +1,6 @@
 %% import data
 addpath('Utilities')
+addpath('TIMSS\supplementary functions')
 K1 = 7;
 
 G1 = importdata("Q.csv").data;
