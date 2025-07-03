@@ -13,3 +13,6 @@ To replicate data analysis, go to the folder `real data` and select the dataset 
 
 ### Additional codes:
 The folder `utilities` contains sub-functions that will be required to implement the main algorithms. We recommend adding this folder using the `addpath 'utilities'` command in MATLAB.
+
+### Dependencies:
+MATLAB  9.13.0.2126072 (R2022b)
