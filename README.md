@@ -16,3 +16,7 @@ The folder `utilities` contains sub-functions that will be required to implement
 
 ### Dependencies:
 MATLAB  9.13.0.2126072 (R2022b)
+
+Optimization toolbox 9.4
+Parallel Computing Toolbox 7.7
+Statistics and Machine Learning Toolbox 12.4
