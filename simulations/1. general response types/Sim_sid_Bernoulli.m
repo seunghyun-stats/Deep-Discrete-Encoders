@@ -1,3 +1,6 @@
+addpath('utilities')
+addpath('main algorithms\Bernoulli')
+
 %% define true parameter values
 % currently, the coefficients are set to B_s (identifiable values)
 K2 = 2;
