@@ -1,6 +1,11 @@
 function [prop, B1, B2, gamma, A1_new, A2_new, t] = get_SAEM_normal(X, prop_in, B1_in, B2_in, gamma_in, pen_1, pen_2, tau, A1_in, A2_in, C, tol)
-%% Algorithm 3 (penalized SAEM) for Normal-two-latent-layer DDEs
-
+%% Algorithm 2 (penalized SAEM) for Normal-two-latent-layer DDEs
+% @X: N x J continuous data matrix
+% @prop_in, B1_in, B2_in, gamma_in, A1_in, A2_in: initialization for corresponding parameters
+% @pen_1, pen_2, tau: tuning parameters for the TLP penalty; pen_1, pen_2 corresponds to the magnitude (lambda in the paper)
+%     and tau denotes the threshold value
+% @C: number of stochastic approximation samples
+% @tol: tolerance for convergence
 % definitions
 K2 = size(prop_in,2);
 [J, K1] = size(B1_in);
