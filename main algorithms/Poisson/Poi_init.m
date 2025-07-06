@@ -1,8 +1,10 @@
 function [prop_ini, B1_ini, B2_ini, A1_est, A2_est, err_G1_ini, err_G2_ini] = Poi_init(X, K1_max, K1, K2, B1, B2, G1, G2, epsilon)
-    % Double-svd initialization for the Normal-2-latent-layer DDE.
-    % currently, this code can handle unknown K1; one can take K1_max = K1
-    % otherwise.
-    % the column permutation adjustment is only implemented for simulations
+% Algorithm 1 (spectral initialization) for Poisson-two-latent-layer DDEs
+% @X: N x J count data matrix
+% @K1_max: upper bound for K1; set to K1 if known
+% @K1, K2: true latent dimensions K1, K2 for simulations
+% @B1, B2, G1, G2: true layer-wise coefficients and graphical matrices
+% @epsilon: truncation threshold for the double-svd
 
     %% 1st layer
     % first svd
