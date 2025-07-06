@@ -1,3 +1,6 @@
+addpath('utilities')
+addpath('main algorithms\Poisson')
+
 %% define true parameter values
 % currently, the coefficients are set to B_s (identifiable values)
 % see below commented part for B_g (generically identifiable values)
