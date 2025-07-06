@@ -3,7 +3,7 @@ function [prop, B1, B2, A1_new, A2_new, t] = get_SAEM_bernoulli(X, prop_in, B1_i
 % @X: N x J binary data matrix
 % @prop_in, B1_in, B2_in, A1_in, A2_in: initialization for corresponding parameters
 % @pen_1, pen_2, tau: tuning parameters for the TLP penalty; pen_1, pen_2 corresponds to the magnitude (lambda in the paper)
-%     and tau denotes the threshold valu
+%     and tau denotes the threshold value
 % @C: number of stochastic approximation samples
 % @tol: tolerance for convergence
 
