@@ -1,9 +1,10 @@
 %% import data
-addpath('Utilities')
-addpath('TIMSS\supplementary functions')
-K1 = 7;
+addpath('dataset')
+addpath('supplementary functions')
 
-G1 = importdata("Q.csv").data;
+K1 = 7; K2 = 1;
+
+G1 = importdata("Q.csv").data; G2 = ones(K1,1); 
 X = importdata("TIMSS.csv");
 
 R = X(:, 1:29);  % response accuracy
@@ -14,38 +15,17 @@ J = size(X,2);
 
 
 %% main estimation
-C = 40;
-B10_time = zeros(J, K1+1, C); B10_resp = zeros(J, K1+1, C);
-gamma_0 = zeros(J, C);
-loglik_vec = zeros(C,1);
-tol = 1;
+rng(5);
 
-K2 = 1; G2 = ones(K1,1); 
-B20 = zeros(K1, K2+1, C); prop_0 = zeros(K2,C);
-parfor(c = 1:C, 4)
-    rng(c);
-    prop_in = 0.4 + 0.4*rand(1,K2);
-    gamma_in = 0.4*ones(J,1);
-    B1_time_in = [2*ones(J,1)+rand(J,1), G1.*(rand(J, K1)+0.5)];
-    B1_resp_in = [-1*ones(J,1)+rand(J,1), G1.*(rand(J, K1))];
-    B2_in =[-1.5*ones(K1,1)+rand(K1,1), G2.*(2*rand(K1, K2)+0.5)];
+prop_in = 0.4 + 0.4*rand(1,K2);
+gamma_in = 0.4*ones(J,1);
+B1_time_in = [2*ones(J,1)+rand(J,1), G1.*(rand(J, K1)+0.5)];
+B1_resp_in = [-1*ones(J,1)+rand(J,1), G1.*(rand(J, K1))];
+B2_in =[-1.5*ones(K1,1)+rand(K1,1), G2.*(2*rand(K1, K2)+0.5)];
 
-    [prop, B1_time, B1_resp, B2, gamma, loglik, itera] = get_EM_multimodal_confirm(X, R, prop_in, B1_time_in, B1_resp_in, B2_in, gamma_in, G1, G2);
+[prop, B1_time, B1_resp, B2, gamma, loglik, itera] = get_EM_multimodal_confirm(X, R, prop_in, B1_time_in, B1_resp_in, B2_in, gamma_in, G1, G2);
 
-    prop_0(:,c) = prop; B10_time(:,:,c) = B1_time; B10_resp(:,:,c) = B1_resp; B20(:,:,c) = B2; gamma_0(:,c) = gamma;
-    loglik_vec(c) = loglik;
-end
-
-[~,c] = max(loglik_vec);
-prop = prop_0(:,c);
-B1_time = B10_time(:,:,c);
-B1_resp = B10_resp(:,:,c);
-B2 = B20(:,:,c);
-gamma = gamma_0(:,c);
-
-
-
-%% visualize estimated coefficients
+%% visualize estimated coefficients (Figure S.16 in the supplement)
 figure;
 h = heatmap(0:4, 1:J, round(B1_time(1:J,1:5),2));
 h.Title = 'Response time';
@@ -111,10 +91,12 @@ for i = 1:N
     A1_est(i,:) = binary(b-1, K1);
 end
 
-%% comparison with held-out survey response
-% value: 1 [Agree a lot], 2 [Agree a little], 3 [Disagree a little], 4 [Disagree a lot]
+
+%% comparison with held-out survey response (Table 6 in the main paper)
+% Table 6 reports `mean_vec_2` and the first 4 columns of `mean_vec_1`
 
 like_math = readmatrix("survey_response.csv");
+% value: 1 [Agree a lot], 2 [Agree a little], 3 [Disagree a little], 4 [Disagree a lot]
 
 mean_vec_2 = zeros(4, K2);
 mean_vec_1 = zeros(4, K1);
