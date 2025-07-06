@@ -1,4 +1,6 @@
 ## Overview
+The `simulations` folder contains two sub-folders, which contain codes used for the Simulation Studies section (Section 5) in the main paper as well as related supplements.
+
 ### 1. general response types
 This folder contains three scripts for estimating two-latent-layer DDEs, which corresponds to the first paragraph in Section 5.
 Each file (Bernoulli, Normal, Poisson) corresponds to the simulation results presented in Figure 4 in the main paper (and the exact values displayed in Tables S.6-11).
