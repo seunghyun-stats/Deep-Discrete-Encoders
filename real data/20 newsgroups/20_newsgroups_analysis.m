@@ -1,4 +1,10 @@
 %% load data
+addpath('dataset')
+addpath('dataset/test dataset')
+addpath('supplementary functions')
+addpath('C:\Users\leesa\Desktop\Deep-Discrete-Encoders-main\utilities')
+addpath('C:\Users\leesa\Desktop\Deep-Discrete-Encoders-main\main algorithms\Poisson')
+
 X = readmatrix("X_train.csv");
 vocab = readcell("vocab_train.csv");
 category = readmatrix("lab_train.csv");
@@ -26,6 +32,7 @@ end
 plot(5:20, ratio(5:20), 'b');
 hold on; 
 
+% generate the right panel of Figure S.13
 highlightX = 8;           
 highlightY = ratio(8);
 plot(highlightX, highlightY, 's', 'MarkerSize', 10, 'MarkerEdgeColor', 'k', 'MarkerFaceColor', 'r');
@@ -45,7 +52,11 @@ epsilon = 0.001;
     B2_ini, N^(2/8), N^(2/8), 2*N^(-3/8), 20);
 
 
-%% uncomment below for the actual implementation %%
+%%%%% the following code was actually used for our analysis to select
+%%%%% tuning parameters, but is commented out for faster illustration.
+%%%%% the outputs can be directly imported by loading the
+%%%%% `newsgroups_analysis_data.mat` file.
+
 % % select tuning parameter via EBIC
 % lambda_1_vec = [N^(1/8) N^(2/8) N^(3/8)];
 % lambda_2_vec = lambda_1_vec;
@@ -82,13 +93,20 @@ epsilon = 0.001;
 % [prop, B1, B2, phi, loglik, itera] = get_EM_poisson_data(X, prop, B1, ...
 %     B2, lambda_1_vec(ii), lambda_2_vec(jj), tau_vec(kk), tol);
 % 
-% save("Newsgroup_"+K1".mat")
 
 
-%% Analysis
-% find representative words for each topic
-nonzero_word = find(sum(B1_est(:, 2:end),2) ~= 0);
-zero_word = find(sum(B1_est(:, 2:end),2) == 0);
+
+%% The following code generates results in the main paper
+% The right panel of Figure 1 and the latent graphical structure in Figure
+% 6 are be directly read off from the estimated B1, B2 coefficients.
+% Note that the latent variables in Figures 1 and 6 are permuted for easier
+% visualization.
+B1(1:10,:)
+B2
+
+% find representative words for each topic (see Figure 6)
+nonzero_word = find(sum(B1(:, 2:end),2) ~= 0);
+zero_word = find(sum(B1(:, 2:end),2) == 0);
 
 top_N_words = 15;
 anchor_words = strings([K1, top_N_words]); anchor_index = zeros(K1, top_N_words);
@@ -96,15 +114,16 @@ for k = 1:K1
     tmp = zeros(J,1);
     for j = 1:J
         tmp(j) = max(0, min(B1(j,k+1) - B1(j,setdiff(2:(K1+1), k+1)))); 
-        % based on largest difference between other row values
     end
     [~, sort_ind_k] = sort(tmp, "descend");
     anchor_words(k, 1:top_N_words) = vocab(sort_ind_k(1:top_N_words));
     anchor_index(k, 1:top_N_words) = sort_ind_k(1:top_N_words);
 end
 
-anchor_words
+anchor_words % each row corresponds to the top 15 anchor words per topic
 
+
+% compute evaulation metrics in Table 5
 % compute similarity
 similarity = 0;
 for k = 1:8
@@ -113,6 +132,8 @@ for k = 1:8
         similarity = similarity + length(commonElements);
     end
 end
+similarity
+
 
 % compute coherence
 X_final = readmatrix("X_test.csv");
@@ -129,12 +150,33 @@ for k = 1:8
 end
 neg_coherence = - coherence/K1
 
+
+% compute train perplexity
+[pi_1, pi_2] = posterior_mean(phi,K1,K2);
+
+S = 100;
+A1_sample = zeros(N, K1, S);
+for s = 1:S
+    A1_sample(:,:,s) = (rand(N, K1) < pi_1);
+end
+
+lambda_resaled = zeros(N,J,S);
+for s = 1:S
+    lambda = exp([ones(N,1), A1_sample(:,:,s)] * B1');
+    lambda_sum = sum(lambda, 2);
+    lambda_resaled(:,:,s) = lambda ./ repmat(lambda_sum, 1, J);
+end
+
+log_perplexity = - sum(X.*log(mean(lambda_resaled,3)),'all')/sum(X, 'all');
+exp(log_perplexity)
+
+
 % compute test perplexity
 X_final = readmatrix("X_test_subset.csv");  % 80% of words, used to estimate the latent variables
 X_valid = readmatrix("X_valid_subset.csv"); % 20% of words, used to evaluate perplexity
 
 [N_fin, J] = size(X_final);
-phi = zeros(N_fin, 2^K1, 2^K2); phi_tmp = phi;
+phi_test = zeros(N_fin, 2^K1, 2^K2); phi_tmp = phi;
 phi_2 = zeros(N_fin,1);
 
 A2 = binary(0:(2^K2-1), K2);
@@ -149,18 +191,22 @@ for i = 1:N_fin
         phi_tmp(i, :, b) = (-sum(exp(lambda), 2) + lambda*X_final(i,:)' + A1*eta' ...
             - sum(log(1+exp(eta))) + log(prop) * A2(b,:)' + log(1 - prop) * (1-A2(b,:))');
     end
-    [phi(i,:,:), phi_2(i)] = compute_logistic(reshape(phi_tmp(i,:,:),2^K1,2^K2));
+    [phi_test(i,:,:), phi_2(i)] = compute_logistic(reshape(phi_tmp(i,:,:),2^K1,2^K2));
 end
 
-pi_1 = zeros(N_fin, K1);
-pi = sum(phi, 3);
-for i = 1:N_fin
-    [~, I] = max(pi(i,:));
-    pi_1(i,:) = binary(I-1, K1);
+[pi_1, pi_2] = posterior_mean(phi_test,K1,K2);
+
+A1_sample = zeros(N_fin, K1, S);
+for s = 1:S
+    A1_sample(:,:,s) = (rand(N_fin, K1) < pi_1);
 end
 
-lambda = exp([ones(N_fin,1), pi_1] * B1');
-lambda_sum = sum(lambda, 2);
-lambda_resaled = lambda ./ repmat(lambda_sum, 1, J);
-neg_log_perplexity = sum(X_valid.*log(lambda_resaled),'all')/sum(X_valid, 'all');
-exp(-neg_log_perplexity)
+lambda_resaled = zeros(N_fin,J,S);
+for s = 1:S
+    lambda = exp([ones(N_fin,1), A1_sample(:,:,s)] * B1');
+    lambda_sum = sum(lambda, 2);
+    lambda_resaled(:,:,s) = lambda ./ repmat(lambda_sum, 1, J);
+end
+
+log_perplexity = - sum(X_valid.*log(mean(lambda_resaled,3)),'all')/sum(X_valid, 'all');
+exp(log_perplexity)
