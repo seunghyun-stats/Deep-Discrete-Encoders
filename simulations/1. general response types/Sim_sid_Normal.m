@@ -1,3 +1,6 @@
+addpath('utilities')
+addpath('main algorithms\Normal')
+
 %% define true parameter values
 % currently, the coefficients are set to B_s (strict identifiable values)
 K2 = 2;
