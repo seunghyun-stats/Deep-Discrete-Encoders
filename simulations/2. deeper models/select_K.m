@@ -1,6 +1,6 @@
 % This code was used to generate Table S.5.
 
-addpath('C:\Users\leesa\Documents\MATLAB\Deep parametric model\GitHub codes\utilities')
+addpath('utilities')
 addpath('Auxiliary code')
 
 D = 3; K3 = 2;
