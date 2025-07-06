@@ -1,8 +1,8 @@
 % This code was used to generate Table 1 and Tables S.3, S.4 (in the
 % supplement).
 
-addpath('C:\Users\leesa\Documents\MATLAB\Deep parametric model\GitHub codes\utilities')
-addpath('C:\Users\leesa\Documents\MATLAB\Deep parametric model\GitHub codes\main algorithms\Normal')
+addpath('utilities')
+addpath('main algorithms\Normal')
 addpath('Auxiliary code')
 
 
