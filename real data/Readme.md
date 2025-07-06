@@ -8,4 +8,4 @@ TBA.
 TBA.
 
 ### TIMSS
-TBA.
+The script `TIMSS_analysis.m` computes the average latent variable estimates per question in Table 6, as well as generates the heatmaps in Figure S.16.
