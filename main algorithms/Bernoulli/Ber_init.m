@@ -1,8 +1,10 @@
 function [prop_ini, B1_ini, B2_ini, A1_est, A2_est, err_G1_ini, err_G2_ini] = Ber_init(X, K1_max, K1, K2, B1, B2, G1, G2, epsilon)
-% This function computes a spectral initialization based on a variant of
-% the double-svd method in Zhang et. al (2020). 
-% We additionally use the varimax rotation to make the coefficients B1 and
-% B2 sparse.
+% Algorithm 1 (spectral initialization) for Bernoulli-two-latent-layer DDEs
+% @X: N x J binary data matrix
+% @K1_max: upper bound for K1; set to K1 if known
+% @K1, K2: true latent dimensions K1, K2 for simulations
+% @B1, B2, G1, G2: true layer-wise coefficients and graphical matrices
+% @epsilon: truncation threshold for the double-svd
 
     [N,J] = size(X);
     [U,S,V] = svd(X, "econ");
