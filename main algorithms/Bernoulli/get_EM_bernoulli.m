@@ -3,7 +3,7 @@ function [prop, B1, B2, phi, loglik] = get_EM_bernoulli(X, prop_in, B1_in, B2_in
 % @X: N x J binary data matrix
 % @prop_in, B1_in, B2_in: initialization for corresponding parameters
 % @pen_1, pen_2, tau: tuning parameters for the TLP penalty; pen_1, pen_2 corresponds to the magnitude (lambda in the paper)
-%     and tau denotes the threshold valu
+%     and tau denotes the threshold value
 % @tol: tolerance for convergence
 
 
