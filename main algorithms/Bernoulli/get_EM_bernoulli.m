@@ -1,5 +1,11 @@
 function [prop, B1, B2, phi, loglik] = get_EM_bernoulli(X, prop_in, B1_in, B2_in, pen_1, pen_2, tau, tol)
-%% Algorithm 1 (Basic PEM) for Bernoulli-two-latent-layer DDEs
+%% Algorithm 6 (Basic PEM) for Bernoulli-two-latent-layer DDEs
+% @X: N x J binary data matrix
+% @prop_in, B1_in, B2_in: initialization for corresponding parameters
+% @pen_1, pen_2, tau: tuning parameters for the TLP penalty; pen_1, pen_2 corresponds to the magnitude (lambda in the paper)
+%     and tau denotes the threshold valu
+% @tol: tolerance for convergence
+
 
 % definitions
 K2 = size(prop_in,2);
