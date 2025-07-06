@@ -37,7 +37,7 @@ n_par = K3 + J + 4*(K1+K2+K3+K4);  % remove K4 or add K5
 
 
 %% main simulation
-C = 8; n_vec = [500 1000 2000 4000 8000 16000]; 
+C = 100; n_vec = [500 1000 2000 4000 8000 16000]; 
 n_parallel = 4; 
 res_itera = zeros(length(n_vec), 1); res_time = zeros(length(n_vec), 1);
 err_Gd_final = zeros(C,D);
