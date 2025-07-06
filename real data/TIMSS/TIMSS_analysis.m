@@ -25,7 +25,7 @@ B2_in =[-1.5*ones(K1,1)+rand(K1,1), G2.*(2*rand(K1, K2)+0.5)];
 
 [prop, B1_time, B1_resp, B2, gamma, loglik, itera] = get_EM_multimodal_confirm(X, R, prop_in, B1_time_in, B1_resp_in, B2_in, gamma_in, G1, G2);
 
-%% visualize estimated coefficients (Figure S.16 in the supplement)
+%% visualize estimated coefficients (Fig S.16 in the supplement)
 figure;
 h = heatmap(0:4, 1:J, round(B1_time(1:J,1:5),2));
 h.Title = 'Response time';
@@ -33,7 +33,7 @@ h.XLabel = 'attribue indices';
 h.XData = ["intercept","Number","Algebra", 'Geometry', "Data&Prob"];
 s = struct(h);
 s.XAxis.TickLabelRotation = 30;
-print('-r300', 'RT', '-dpng')
+print('-r300', 'RT', '-dpng') % right panel of Fig S.16
 
 figure;
 h = heatmap(0:4, 1:J, round(B1_resp(1:J,1:5),2));
@@ -42,7 +42,7 @@ h.XLabel = 'attribue indices';
 h.XData = ["intercept","Number","Algebra", 'Geometry', "Data&Prob"];
 s = struct(h);
 s.XAxis.TickLabelRotation = 30;
-print('-r300', 'RA', '-dpng')
+print('-r300', 'RA', '-dpng') % left panel of Fig S.16
 
 
 
