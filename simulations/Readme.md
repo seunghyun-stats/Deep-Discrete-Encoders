@@ -4,7 +4,7 @@ The `simulations` folder contains two sub-folders, which contain codes used for 
 ### 1. general response types
 This folder contains three scripts for estimating two-latent-layer DDEs, which corresponds to the first paragraph in Section 5.
 Each file (Bernoulli, Normal, Poisson) corresponds to the simulation results presented in Figure 4 in the main paper (and the exact values displayed in Tables S.6-11).
-To reproduce the results, run the script corresponding to the observed-layer parametric family of interest (e.g. run `Sim_sid_Bernoulli.m` for Bernoulli-DDEs.).
+To reproduce the results, run the script corresponding to the observed-layer parametric family of interest (e.g. run `Sim_sid_Bernoulli.m` for Bernoulli-DDEs.). Note that while the current script assumes strictly identifiable true parameters, one can easily change them to generically identifiable parameters whose values can be found in eq. (S.37) in the supplement.
 
 ### 2. deeper models
 This folder contains two scripts for experiments of DDEs with more than two latent layers, which corresponds to the first paragraph in Section 5. 
