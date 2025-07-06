@@ -1,5 +1,12 @@
 function [prop, B1, B2, A1_new, A2_new, t] = get_SAEM_bernoulli(X, prop_in, B1_in, B2_in, pen_1, pen_2, tau, A1_in, A2_in, C, tol)
-%% Algorithm 3 (penalized SAEM) for Bernoulli-two-latent-layer DDEs
+%% Algorithm 2 (penalized SAEM) for Bernoulli-two-latent-layer DDEs
+% @X: N x J binary data matrix
+% @prop_in, B1_in, B2_in, A1_in, A2_in: initialization for corresponding parameters
+% @pen_1, pen_2, tau: tuning parameters for the TLP penalty; pen_1, pen_2 corresponds to the magnitude (lambda in the paper)
+%     and tau denotes the threshold valu
+% @C: number of stochastic approximation samples
+% @tol: tolerance for convergence
+
 
 % definitions
 K2 = size(prop_in,2);
