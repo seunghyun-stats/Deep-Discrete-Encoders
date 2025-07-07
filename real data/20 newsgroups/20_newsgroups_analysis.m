@@ -2,8 +2,8 @@
 addpath('dataset')
 addpath('dataset/test dataset')
 addpath('supplementary functions')
-addpath('C:\Users\leesa\Desktop\Deep-Discrete-Encoders-main\utilities')
-addpath('C:\Users\leesa\Desktop\Deep-Discrete-Encoders-main\main algorithms\Poisson')
+addpath('Deep-Discrete-Encoders-main\utilities')
+addpath('Deep-Discrete-Encoders-main\main algorithms\Poisson')
 
 X = readmatrix("X_train.csv");
 vocab = readcell("vocab_train.csv");
