@@ -1,4 +1,7 @@
 function [A2_est, B2_ini] = binary_init(N, K1, K2, A1_est, B2, factor, epsilon)
+% given a binary matrix A1_est (N x K1), estimate the upper-layer latent variable
+% matrix A2_est (N x K2) and coefficients B2_ini (K1 x (K2+1))
+
     [U,S,V] = svd(A1_est, "econ");
     m = max(K2*2, sum(diag(S) > 1.01*sqrt(N)));
     A1_top_m = U(1:end, 1:m) * S(1:m, 1:m) * V(1:end, 1:m)';
@@ -53,4 +56,5 @@ function [A2_est, B2_ini] = binary_init(N, K1, K2, A1_est, B2, factor, epsilon)
 
     end
     b2 = mean(A_inv_adj, 1)' - B2_re_est * mean(A2_est, 1)'; % B2(:,1);
+
     B2_ini = [b2, B2_re_est];
