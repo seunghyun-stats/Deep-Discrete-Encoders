@@ -3,7 +3,7 @@
 
 addpath('utilities')
 addpath('main algorithms\Normal')
-addpath('Auxiliary code')
+addpath('simulations\2. deeper models\Auxiliary code')
 
 
 %% Define number of latent layers
@@ -96,3 +96,4 @@ for aa = 1:length(n_vec)
     res_time(aa) = mean(time_vec);          % average computation time
     save("Gaussian_sid_"+D+"_"+N+'.mat')    % final output is stored as a .mat file
 end
+
