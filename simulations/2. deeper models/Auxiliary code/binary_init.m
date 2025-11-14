@@ -55,7 +55,8 @@ function [A2_est, B2_ini] = binary_init(N, K1, K2, A1_est, B2, factor, epsilon)
         B2_re_est = B2_re_est(:, assignment);
 
     end
-    b2 = change to mean(A_inv_adj, 1)' - B2_re_est * mean(A2_est, 1)'; % for better performance change to B2(:,1);  
+    b2 = mean(A_inv_adj, 1)' - B2_re_est * mean(A2_est, 1)'; % for better performance change to B2(:,1);  
 
     B2_ini = [b2, B2_re_est];
+
 
