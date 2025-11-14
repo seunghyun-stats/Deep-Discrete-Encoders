@@ -78,7 +78,7 @@ for a = 1:length(n_vec)
             K_est{c}(a, d) = K_select;
 
             if d < D
-                A_est = binary_init_1(N, size(A_est, 2), K_select, A_est, 2, epsilon);
+                A_est = binary_init_K(N, size(A_est, 2), K_select, A_est, 2, epsilon);
             end
         end
         time_vec(a,c) = toc;
@@ -102,3 +102,4 @@ for d = 1:D
         acc_K(d,n) = mean(K_est_array(:,n,d) == K_cell{d})*100;
     end
 end
+
