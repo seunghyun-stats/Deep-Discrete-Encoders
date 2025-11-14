@@ -1,6 +1,8 @@
-function A2_est = binary_init_1(N, K1, K2, A1_est, factor, epsilon)
+function A2_est = binary_init_K(N, K1, K2, A1_est, factor, epsilon)
 % given a binary matrix A1_est (N x K1), estimate the upper-layer latent variable
 % matrix A2_est (N x K2)
+% This is almost identical to `binary_init.m` but removed the redundant column
+% permutation step
 
     [U,S,V] = svd(A1_est, "econ");
     m = max(min(K2*2, K1-2), sum(diag(S) > 1.01*sqrt(N)));
@@ -34,4 +36,5 @@ function A2_est = binary_init_1(N, K1, K2, A1_est, factor, epsilon)
         % estimate A2
         A2_est = A_inv_adj * B2_est * inv(B2_est' * B2_est);
         A2_est = double(A2_est > 0);
+
     end
